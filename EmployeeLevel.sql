@@ -1,0 +1,5 @@
+CREATE TABLE Emplevel1449(
+LevelNo INT NOT NULL PRIMARY KEY,
+Lowsallary INT NOT NULL,
+Highsallary INT NOT NULL
+);

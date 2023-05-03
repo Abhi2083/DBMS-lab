@@ -1,0 +1,7 @@
+CREATE TABLE Position1449(
+PositionId INT NOT NULL PRIMARY KEY,
+PosDesc VARCHAR(50) NOT NULL
+);
+INSERT INTO position1449 values(18,'WORKER');
+INSERT INTO position1449 values(19,'dancer');
+SELECT * FROM position1449;
