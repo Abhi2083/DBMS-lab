@@ -1,1 +1,1 @@
-# DBMS-lab
+# DBMS-lab SQL Commands and Uses
