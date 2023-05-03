@@ -1,0 +1,94 @@
+SQL> SELECT * FROM PRODUCT WHERE CREATED_DATE >= 01-Jan-2020;
+SELECT * FROM PRODUCT WHERE CREATED_DATE >= 01-Jan-2020
+                                               *
+ERROR at line 1:
+ORA-00904: "JAN": invalid identifier 
+
+
+SQL> SELECT * FROM PRODUCT WHERE CREATED_DATE >= '01-Jan-2020';
+
+        ID NAME                                                                 
+---------- --------------------                                                 
+DESCRIPTION                                                                     
+--------------------------------------------------                              
+STATUS                         CREATED_D CREATED_BY           LAST_MODI         
+------------------------------ --------- -------------------- ---------         
+LAST_MODIFIED_BY           COST INJECTED_                                       
+-------------------- ---------- ---------                                       
+         1 Kurkure                                                              
+Crunchy desc job1;                                                              
+available                      10-JAN-20 Namrata fast food    12-JAN-20         
+Sohan                        20 06-FEB-20                                       
+                                                                                
+
+        ID NAME                                                                 
+---------- --------------------                                                 
+DESCRIPTION                                                                     
+--------------------------------------------------                              
+STATUS                         CREATED_D CREATED_BY           LAST_MODI         
+------------------------------ --------- -------------------- ---------         
+LAST_MODIFIED_BY           COST INJECTED_                                       
+-------------------- ---------- ---------                                       
+         2 Chips                                                                
+Baked                                                                           
+available                      11-JAN-20 Rajiv fast food      18-JAN-20         
+Raju                         10 18-FEB-20                                       
+                                                                                
+
+        ID NAME                                                                 
+---------- --------------------                                                 
+DESCRIPTION                                                                     
+--------------------------------------------------                              
+STATUS                         CREATED_D CREATED_BY           LAST_MODI         
+------------------------------ --------- -------------------- ---------         
+LAST_MODIFIED_BY           COST INJECTED_                                       
+-------------------- ---------- ---------                                       
+         3 lays                                                                 
+Crunchy and delicious                                                           
+out of stock                   11-JAN-20 Namrata fast food    18-JAN-20         
+Sohan                        70 09-FEB-20                                       
+                                                                                
+
+SQL> SELECT CREATED_DATE FROM PRODUCT WHERE CREATED_DATE >= '01-Jan-2020';
+
+CREATED_D                                                                       
+---------                                                                       
+10-JAN-20                                                                       
+11-JAN-20                                                                       
+11-JAN-20                                                                       
+
+SQL> select power(2,10);
+select power(2,10)
+                 *
+ERROR at line 1:
+ORA-00923: FROM keyword not found where expected 
+
+
+SQL> select power(2,10) from product;
+
+POWER(2,10)                                                                     
+-----------                                                                     
+       1024                                                                     
+       1024                                                                     
+       1024                                                                     
+
+SQL> select ceiling(sallary) from job1;
+select ceiling(sallary) from job1
+       *
+ERROR at line 1:
+ORA-00904: "CEILING": invalid identifier 
+
+
+SQL> select avg(bonus) from job1;
+
+AVG(BONUS)                                                                      
+----------                                                                      
+       200                                                                      
+
+SQL> select COUNT(TITLE) from job1;
+
+COUNT(TITLE)                                                                    
+------------                                                                    
+           4                                                                    
+
+SQL> spool off;

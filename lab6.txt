@@ -1,0 +1,107 @@
+CREATE TABLE Employee (
+  EmployeeID INTEGER PRIMARY KEY,
+  Lname VARCHAR(50),
+  Fname VARCHAR(50),
+  DepartmentID INTEGER,
+  SupervisorID INTEGER,
+  Qualification VARCHAR(0),
+  HireDate DATE,
+  Salary dec(10,2)
+);
+
+
+INSERT INTO Employee (EmployeeID, Lname, Fname, DepartmentID, SupervisorID, Qualification, HireDate, Salary) VALUES (101, 'Shaw', 'Jinku', 10, 102, 'BSc', '2010-07-16', 50000);
+INSERT INTO Employee (EmployeeID, Lname, Fname, DepartmentID, SupervisorID, Qualification, HireDate, Salary) VALUES (102, 'Jones', 'Jane', 10, NULL, 'MSc', '2005-06-14', 75000);
+INSERT INTO Employee (EmployeeID, Lname, Fname, DepartmentID, SupervisorID, Qualification, HireDate, Salary) VALUES (201, 'Davis', 'David', 20, 202, 'PhD', '2005-03-19', 80000);
+INSERT INTO Employee (EmployeeID, Lname, Fname, DepartmentID, SupervisorID, Qualification, HireDate, Salary) VALUES (202, 'Lee', 'Lisa', 20, NULL, 'MBA', '2012-08-12', 60000);
+
+
+
+CREATE TABLE Department (
+  DepartmentID INTEGER PRIMARY KEY,
+  DepartmentName VARCHAR(50)
+);
+
+INSERT INTO Department (DepartmentID, DepartmentName) VALUES (10, 'Sales');
+INSERT INTO Department (DepartmentID, DepartmentName) VALUES (20, 'Marketing');
+
+
+SELECT DepartmentName
+FROM Employee
+JOIN Department ON Employee.DepartmentID = Department.DepartmentID
+WHERE Employee.Lname = 'Shaw' AND Employee.Fname = 'Jinku';
+
+SELECT CONCAT(e1.Fname, ' ', e1.Lname) AS SupervisorName
+FROM Employee e1
+JOIN Employee e2 ON e1.EmployeeID = e2.SupervisorID
+WHERE e2.EmployeeID = 401;
+
+SELECT CONCAT(Fname, ' ', Lname) AS EmployeeName
+FROM Employee
+WHERE Qualification = (
+    SELECT Qualification
+    FROM Employee
+    WHERE Lname = 'Shaw' AND Fname = 'Jinku'
+);
+
+SELECT DepartmentID, COUNT(*) AS EmployeeCount
+FROM Employee
+GROUP BY DepartmentID
+HAVING COUNT(*) > (
+    SELECT COUNT(*)
+    FROM Employee
+    WHERE DepartmentID = 20
+);
+
+SELECT CONCAT(Fname, ' ', Lname) AS EmployeeName, HireDate
+FROM Employee
+WHERE HireDate < (
+    SELECT HireDate
+    FROM Employee
+    WHERE Lname = 'Kim' AND Fname = 'Karen'
+);
+
+SELECT CONCAT(Fname, ' ', Lname) AS EmployeeName
+FROM Employee
+WHERE DepartmentID = (
+    SELECT DepartmentID
+    FROM Department
+    WHERE DepartmentName = 'Sales'
+);
+
+CREATE TABLE EMP30 (
+    EmployeeID INT,
+    Lname VARCHAR(50),
+    Fname VARCHAR(50),
+    HireDate DATE,
+    Salary DECIMAL(10,2)
+);
+
+INSERT INTO EMP30 (EmployeeID, Lname, Fname, HireDate, Salary)
+SELECT EmployeeID, Lname, Fname, HireDate, Salary
+FROM Employee
+WHERE DepartmentID = (
+    SELECT DepartmentID
+    FROM Department
+    WHERE DepartmentName = 'Marketing'
+);
+
+INSERT INTO EMP30 (EmployeeID, Lname, Fname, HireDate)
+SELECT EmployeeID, Lname, Fname, HireDate
+FROM Employee
+WHERE DepartmentID = 40;
+
+SELECT E1.EmployeeID, E1.Lname, E1.Fname, E1.DepartmentID, E1.Salary
+FROM Employee E1
+WHERE E1.Salary = (
+    SELECT MIN(E2.Salary)
+    FROM Employee E2
+    WHERE E2.DepartmentID = E1.DepartmentID
+);
+
+SELECT E.EmployeeID, E.Lname, E.Fname, D.Name AS Department,
+       (SELECT COUNT(*) FROM Dependent WHERE EmployeeID = E.EmployeeID) AS DependentCount,
+       (SELECT COUNT(*) FROM Dependent WHERE EmployeeID = E.EmployeeID) / COUNT(*) OVER() AS DependentRatio
+FROM Employee E
+JOIN Department D ON E.DepartmentID = D.DepartmentID
+WHERE D.Name = 'FINANCE';

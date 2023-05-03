@@ -1,0 +1,168 @@
+Q1.
+
+SQL> CREATE TABLE student1449(Roll int primary key,Name varchar(20),Gender varchar(10),DOB date,Book_issue_date date,Book_return_date date);
+
+Table created.
+
+SQL> desc student1449
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ROLL                                      NOT NULL NUMBER(38)
+ NAME                                               VARCHAR2(20)
+ GENDER                                             VARCHAR2(10)
+ DOB                                                DATE
+ BOOK_ISSUE_DATE                                    DATE
+ BOOK_RETURN_DATE                                   DATE
+
+
+Q2.
+
+SQL> Create table Library1449(Book_no int primary key,Book_author varchar(20),book_publication varchar(20),Book_name varchar(20),Book_page int,Book_price int,Purchase_date date,Roll int references student1449(Roll),Book_issue_date date,Book_return_date date);
+
+Table created.
+
+SQL> desc library1449;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ BOOK_NO                                   NOT NULL NUMBER(38)
+ BOOK_AUTHOR                                        VARCHAR2(20)
+ BOOK_PUBLICATION                                   VARCHAR2(20)
+ BOOK_NAME                                          VARCHAR2(20)
+ BOOK_PAGE                                          NUMBER(38)
+ BOOK_PRICE                                         NUMBER(38)
+ PURCHASE_DATE                                      DATE
+ ROLL                                               NUMBER(38)
+ BOOK_ISSUE_DATE                                    DATE
+ BOOK_RETURN_DATE                                   DATE
+
+
+Q3.
+
+SQL> INSERT into student1449 values (201,'Rajiv','male','20-mar-2003','23-feb-2023','28-feb-2023');
+
+1 row created.
+
+SQL> INSERT into student1449 values (202,'Shreya','Female','20-Aug-2003','22-feb-2023','27-feb-2023');
+
+1 row created.
+
+SQL> INSERT into student1449 values (203,'Yami','Female','20-Nov-2003','21-feb-2023','26-feb-2023');
+
+1 row created.
+
+SQL> INSERT into student1449 values (204,'Abhishek','Male','01-Mar-2003','25-feb-2023','01-Mar-2023');
+
+1 row created.
+
+SQL> INSERT into student1449 values (205,'Kairav','Male','01-Mar-2004','25-jan-2023','03-Mar-2023');
+
+1 row created.
+
+SQL> select * from student1449;
+
+      ROLL NAME                 GENDER     DOB       BOOK_ISSU BOOK_RETU        
+---------- -------------------- ---------- --------- --------- ---------        
+       201 Rajiv                male       20-MAR-03 23-FEB-23 28-FEB-23        
+       202 Shreya               Female     20-AUG-03 22-FEB-23 27-FEB-23        
+       203 Yami                 Female     20-NOV-03 21-FEB-23 26-FEB-23        
+       204 Abhishek             Male       01-MAR-03 25-FEB-23 01-MAR-23        
+       205 Kairav               Male       01-MAR-04 25-JAN-23 03-MAR-23        
+
+
+Q4.
+ 
+SQL> desc library1449;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ BOOK_NO                                   NOT NULL NUMBER(38)
+ BOOK_AUTHOR                                        VARCHAR2(20)
+ BOOK_PUBLICATION                                   VARCHAR2(20)
+ BOOK_NAME                                          VARCHAR2(20)
+ BOOK_PAGE                                          NUMBER(38)
+ BOOK_PRICE                                         NUMBER(38)
+ PURCHASE_DATE                                      DATE
+ ROLL                                               NUMBER(38)
+ BOOK_ISSUE_DATE                                    DATE
+ BOOK_RETURN_DATE                                   DATE
+
+SQL> Insert into library1449 values(1001,'Manish','Gautam Publication','Step to Success',100,249,'20-feb-2023',203,'21-feb-2023','26-feb-2023');
+
+1 row created.
+
+SQL> Insert into library1449 values(1002,'Minakshi','Rishi Publication','A day in my life',130,159,'21-jan-2023',201,'23-feb-2023','28-feb-2023');
+
+1 row created.
+
+SQL> Insert into library1449 values(1003,'Minakshi','Rishi Publication','A day in my life',130,159,'21-jan-2023',205,'25-jan-2023','03-mar-2023');
+
+1 row created.
+
+SQL> Insert into library1449 values(1004,'John','Quat Publication','Good Habits',289,200,'02-jan-2022',204,'25-feb-2023','01-mar-2023');
+
+1 row created.
+
+SQL> Insert into library1449 values(1005,'Sahil','Puneet Publication','Feel free',500,600,'29-jan-2022',202,'22-feb-2023','27-feb-2023');
+
+1 row created.               
+
+SQL> set linesize 200;
+SQL> select * from library1449;
+
+   BOOK_NO BOOK_AUTHOR          BOOK_PUBLICATION     BOOK_NAME             BOOK_PAGE BOOK_PRICE PURCHASE_       ROLL BOOK_ISSU BOOK_RETU                                                                
+---------- -------------------- -------------------- -------------------- ---------- ---------- --------- ---------- --------- ---------                                                                
+      1001 Manish               Gautam Publication   Step to Success             100        249 20-FEB-23        203 21-FEB-23 26-FEB-23                                                                
+      1002 Minakshi             Rishi Publication    A day in my life            130        159 21-JAN-23        201 23-FEB-23 28-FEB-23                                                                
+      1003 Minakshi             Rishi Publication    A day in my life            130        159 21-JAN-23        205 25-JAN-23 03-MAR-23                                                                
+      1004 John                 Quat Publication     Good Habits                 289        200 02-JAN-22        204 25-FEB-23 01-MAR-23                                                                
+      1005 Sahil                Puneet Publication   Feel free                   500        600 29-JAN-22        202 22-FEB-23 27-FEB-23                                                                
+
+
+Q5.
+
+SQL> Alter Table student1449 modify Name varchar(20) not null;
+
+Table altered.
+
+
+SQL> Alter Table library1449 modify Book_name varchar(20) not null;
+
+Table altered.
+
+Q7.
+
+SQL> ALTER TABLE Library1449 ADD CONSTRAINT chk_Book_Page CHECK (Book_Page >= 56);
+
+Table altered.
+
+Q8.
+
+SQL> ALTER TABLE Library1449 ADD CONSTRAINT chk_Purchase_date CHECK (Purchase_date < Book_Issue_date);
+
+Table altered.
+
+Q9.
+
+SQL> ALTER TABLE Library1449 ADD CONSTRAINT chk_Book_Issue_date CHECK (Book_Issue_date < Book_Return_date);
+
+Table altered.
+
+Q10.
+
+SQL> UPDATE Student1449
+  2  SET Gender = 'M'
+  3  WHERE Gender = 'Male';
+
+2 rows updated.
+
+SQL>
+SQL> UPDATE Student1449
+  2  SET Gender = 'F'
+  3  WHERE Gender = 'Female';
+
+2 rows updated.
+
+SQL> ALTER TABLE Student1449 ADD CONSTRAINT chk_Gender CHECK (Gender IN ('M', 'F'));
+
+Table altered.
+
+SQL> 	spool off;
